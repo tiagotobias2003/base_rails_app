@@ -4,6 +4,16 @@ Aplicação base pronta para servir como ponto de partida para diferentes tipos 
 
 O objetivo deste projeto é acelerar novos produtos com uma estrutura reutilizável, organizada e preparada para evolução. Ele pode ser usado para **ERPs, CRMs, sistemas internos, SaaS e dashboards administrativos**.
 
+## Como rodar com Docker
+Considerando que você já tenha o docker instalado e rodando na sua máquina, execute os comandos abaixo na ordem:
+
+```bash
+docker compose build --no-cache
+docker compose run --rm web bundle
+docker compose run --rm web bundle exec rails db:create
+docker compose up
+```
+
 ## Como fazer login (dados do seed)
 
 Após rodar `rails db:seed`, use uma das credenciais abaixo na tela de login do Devise:
