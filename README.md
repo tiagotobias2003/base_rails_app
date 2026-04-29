@@ -1,24 +1,46 @@
-# README
+# Base App Rails
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Aplicação base pronta para servir como ponto de partida para diferentes tipos de sistema.
 
-Things you may want to cover:
+O objetivo deste projeto é acelerar novos produtos com uma estrutura reutilizável, organizada e preparada para evolução. Ele pode ser usado para **ERPs, CRMs, sistemas internos, SaaS e dashboards administrativos**.
 
-* Ruby version
+## Como fazer login (dados do seed)
 
-* System dependencies
+Após rodar `rails db:seed`, use uma das credenciais abaixo na tela de login do Devise:
 
-* Configuration
+- **Email:** `user@example.com` | **Senha:** `123456`
+- **Email:** `user2@example.com` | **Senha:** `123456`
 
-* Database creation
+## Acesso rápido
 
-* Database initialization
+- Dashboard: após login, acesse a área principal em `posts_path` (rota "Ir para Dashboard").
 
-* How to run the test suite
+## Stack atual do projeto
 
-* Services (job queues, cache servers, search engines, etc.)
+- **Backend:** Ruby on Rails 8.1.3
+- **Banco de dados:** PostgreSQL
+- **Servidor web:** Puma
+- **Assets:** Propshaft
+- **Frontend Rails:** Importmap + Turbo + Stimulus
+- **UI:** Tailwind CSS
+- **Autenticação:** Devise
+- **Infra nativa Rails:** Solid Cache, Solid Queue e Solid Cable
+- **Utilitários:** Jbuilder, Image Processing, Kamal, Thruster e Bootsnap
 
-* Deployment instructions
+## Layouts disponíveis
 
-* ...
+- **Público:** para páginas sem login (`app/views/layouts/public.html.erb`)
+- **Devise:** para telas de autenticação (`app/views/layouts/devise.html.erb`)
+- **Application:** layout principal do dashboard (`app/views/layouts/application.html.erb`)
+
+### Onde conferir o layout usado nas views
+
+- Definição por controller (ex.: `layout "public"` em `app/controllers/pages_controller.rb`)
+- Quando não houver definição explícita, o Rails usa o layout `application` por padrão
+
+## Links de referência do template
+
+- [Visit Website](https://tailadmin.com)
+- [Documentation](https://tailadmin.com/docs)
+- [Download](https://tailadmin.com/download)
+- [Figma Design File (Community Edition)](https://www.figma.com/community/file/1463141366275764364)
