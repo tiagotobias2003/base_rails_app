@@ -1,0 +1,47 @@
+<div style="margin-top: 50px;">
+  <table cellpadding="0" cellspacing="0" style="font-family: Nunito, Arial, sans-serif; font-size: 15px; font-weight: 400; max-width: 600px; border: none; margin: 0 auto; border-radius: 6px; overflow: hidden; background-color: #ffffff; box-shadow: 0 0 3px rgba(60, 72, 88, 0.15);">
+    <thead>
+      <tr style="background-color: #4f46e5; padding: 3px 0; border: none; line-height: 68px; text-align: center; color: #ffffff; font-size: 24px; letter-spacing: 1px;">
+        <th scope="col" style="font-weight: 700;">APP BASE</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr>
+        <td style="padding: 48px 24px 0; color: #161c2d; font-size: 18px; font-weight: 600;">
+          Olá, <%= @email %>!
+        </td>
+      </tr>
+      <tr>
+        <td style="padding: 15px 24px; color: #8492a6;">
+          Obrigado por criar sua conta. Para continuar, confirme seu endereço de e-mail clicando no botão abaixo:
+        </td>
+      </tr>
+
+      <tr>
+        <td style="padding: 15px 24px;">
+          <%= link_to "Confirmar e-mail", confirmation_url(@resource, confirmation_token: @token), style: "padding: 8px 20px; outline: none; text-decoration: none; font-size: 16px; letter-spacing: 0.5px; transition: all 0.3s; font-weight: 600; border-radius: 6px; background-color: #4f46e5; border: 1px solid #4f46e5; color: #ffffff; display: inline-block;" %>
+        </td>
+      </tr>
+
+      <tr>
+        <td style="padding: 15px 24px 0; color: #8492a6;">
+          Se você não solicitou esta confirmação, pode ignorar este e-mail.
+        </td>
+      </tr>
+
+      <tr>
+        <td style="padding: 15px 24px; color: #8492a6;">
+          Equipe de suporte<br>
+          APP BASE
+        </td>
+      </tr>
+
+      <tr>
+        <td style="padding: 16px 8px; color: #8492a6; background-color: #f8f9fc; text-align: center;">
+          &copy; <%= Date.current.year %> APP BASE.
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

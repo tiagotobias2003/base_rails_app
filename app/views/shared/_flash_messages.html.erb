@@ -1,0 +1,87 @@
+<div class="pointer-events-none fixed inset-x-0 top-4 z-999999999 px-4">
+  <div class="mx-auto flex w-full max-w-2xl flex-col gap-3">
+    <% flash.each do |type, message| %>
+      <% next if message.blank? %>
+      <% kind = type.to_s == "notice" ? :success : :error %>
+      <% classes =
+        if kind == :success
+          "border-emerald-500 bg-emerald-50 text-emerald-600"
+        else
+          "border-rose-500 bg-rose-50 text-rose-600"
+        end
+      %>
+
+      <div
+        data-flash-item
+        class="pointer-events-auto relative overflow-hidden rounded-xl border p-4 shadow-lg <%= classes %>"
+        style="animation: flash-dismiss 5s ease forwards;"
+        onanimationend="this.remove()"
+      >
+        <div class="flex items-start justify-between gap-3">
+          <div class="flex items-start gap-3">
+          <div class="-mt-0.5">
+            <% if kind == :success %>
+              <svg class="h-6 w-6 fill-current" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M3.70186 12.0001C3.70186 7.41711 7.41711 3.70186 12.0001 3.70186C16.5831 3.70186 20.2984 7.41711 20.2984 12.0001C20.2984 16.5831 16.5831 20.2984 12.0001 20.2984C7.41711 20.2984 3.70186 16.5831 3.70186 12.0001ZM12.0001 1.90186C6.423 1.90186 1.90186 6.423 1.90186 12.0001C1.90186 17.5772 6.423 22.0984 12.0001 22.0984C17.5772 22.0984 22.0984 17.5772 22.0984 12.0001C22.0984 6.423 17.5772 1.90186 12.0001 1.90186ZM15.6197 10.7395C15.9712 10.388 15.9712 9.81819 15.6197 9.46672C15.2683 9.11525 14.6984 9.11525 14.347 9.46672L11.1894 12.6243L9.6533 11.0883C9.30183 10.7368 8.73198 10.7368 8.38051 11.0883C8.02904 11.4397 8.02904 12.0096 8.38051 12.3611L10.553 14.5335C10.7217 14.7023 10.9507 14.7971 11.1894 14.7971C11.428 14.7971 11.657 14.7023 11.8257 14.5335L15.6197 10.7395Z" />
+              </svg>
+            <% else %>
+              <svg class="h-6 w-6 fill-current" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M20.3499 12.0004C20.3499 16.612 16.6115 20.3504 11.9999 20.3504C7.38832 20.3504 3.6499 16.612 3.6499 12.0004C3.6499 7.38881 7.38833 3.65039 11.9999 3.65039C16.6115 3.65039 20.3499 7.38881 20.3499 12.0004ZM11.9999 22.1504C17.6056 22.1504 22.1499 17.6061 22.1499 12.0004C22.1499 6.3947 17.6056 1.85039 11.9999 1.85039C6.39421 1.85039 1.8499 6.3947 1.8499 12.0004C1.8499 17.6061 6.39421 22.1504 11.9999 22.1504ZM13.0008 16.4753C13.0008 15.923 12.5531 15.4753 12.0008 15.4753L11.9998 15.4753C11.4475 15.4753 10.9998 15.923 10.9998 16.4753C10.9998 17.0276 11.4475 17.4753 11.9998 17.4753L12.0008 17.4753C12.5531 17.4753 13.0008 17.0276 13.0008 16.4753ZM11.9998 6.62898C12.414 6.62898 12.7498 6.96476 12.7498 7.37898L12.7498 13.0555C12.7498 13.4697 12.414 13.8055 11.9998 13.8055C11.5856 13.8055 11.2498 13.4697 11.2498 13.0555L11.2498 7.37898C11.2498 6.96476 11.5856 6.62898 11.9998 6.62898Z" />
+              </svg>
+            <% end %>
+          </div>
+
+          <div>
+            <h4 class="mb-1 text-sm font-semibold text-slate-900">
+              <%= kind == :success ? "Sucesso" : "Atenção" %>
+            </h4>
+            <p class="text-sm text-slate-600"><%= message %></p>
+          </div>
+          </div>
+
+          <button
+            type="button"
+            class="rounded-md p-1 text-slate-500 transition hover:bg-white/60 hover:text-slate-700 font-bold"
+            aria-label="Fechar notificação"
+            onclick="this.closest('[data-flash-item]').remove()"
+          >
+            <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M4.47 4.47a.75.75 0 011.06 0L10 8.94l4.47-4.47a.75.75 0 111.06 1.06L11.06 10l4.47 4.47a.75.75 0 11-1.06 1.06L10 11.06l-4.47 4.47a.75.75 0 11-1.06-1.06L8.94 10 4.47 5.53a.75.75 0 010-1.06z" />
+            </svg>
+          </button>
+        </div>
+        <div
+          class="absolute bottom-0 left-0 h-1 w-full bg-current/50 origin-left"
+          style="animation: flash-countdown 5s linear forwards;"
+          aria-hidden="true"
+        ></div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<style>
+  @keyframes flash-countdown {
+    from {
+      transform: scaleX(1);
+    }
+    to {
+      transform: scaleX(0);
+    }
+  }
+
+  @keyframes flash-dismiss {
+    0% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    90% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(-6px);
+    }
+  }
+</style>

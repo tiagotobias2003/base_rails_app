@@ -1,0 +1,21 @@
+<nav aria-label="Breadcrumb">
+  <ol class="flex items-center gap-1.5 text-sm text-gray-500 dark:text-gray-400">
+    <% items.each_with_index do |item, index| %>
+      <% if index.positive? %>
+        <li>
+          <svg class="h-4 w-4" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M6 4L10 8L6 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </li>
+      <% end %>
+
+      <li>
+        <% if item[:path].present? && !item[:current] %>
+          <%= link_to item[:label], item[:path], class: "transition hover:text-gray-700 dark:hover:text-gray-200" %>
+        <% else %>
+          <span class="font-medium text-gray-700 dark:text-gray-200"><%= item[:label] %></span>
+        <% end %>
+      </li>
+    <% end %>
+  </ol>
+</nav>

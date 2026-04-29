@@ -1,0 +1,33 @@
+FROM ruby:3.4.9
+
+# Instalar dependências do sistema para Postgres e compilação de Gems
+RUN apt-get update -qq && apt-get install -y \
+    build-essential \
+    libpq-dev \
+    libvips42\
+    ffmpeg\
+    gnupg\
+    nodejs \
+    git \
+    curl
+
+# gem para edicao de imagens
+RUN gem install ruby-vips
+
+# Configurar diretório de trabalho
+WORKDIR /base_app
+
+# Seta o path para as Gems
+ENV BUNDLE_PATH /box
+# Copia nosso código para dentro do container
+COPY . .
+# Garante Gemfile minimo caso nao exista no contexto
+RUN if [ ! -f ./Gemfile ]; then printf "source 'https://rubygems.org'\n" > ./Gemfile; fi
+
+# Instalar a versão específica do Rails
+RUN gem install rails -v 8.1.3
+
+# Expor a porta padrão do Rails
+EXPOSE 3000
+
+CMD ["bash"]

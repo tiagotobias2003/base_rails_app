@@ -1,0 +1,45 @@
+<aside
+  data-controller="sidebar"
+  data-sidebar-storage-key-value="selectedSidebarMenu"
+  class="sidebar fixed left-0 top-0 z-9999 flex h-screen w-[290px] -translate-x-full flex-col overflow-y-hidden border-r border-gray-200 bg-white px-5 transition-all duration-300 ease-linear dark:border-gray-800 dark:bg-black lg:static lg:translate-x-0">
+  <!-- SIDEBAR HEADER -->
+  <div
+    class="flex items-center gap-2 pt-8 sidebar-header pb-7">
+    <%= link_to posts_path do %>
+      <span class="logo">
+        <%= image_tag "logo/logo.svg", class: "dark:hidden", alt: "Logo" %>
+        <%= image_tag "logo/logo-dark.svg", class: "hidden dark:block", alt: "Logo" %>
+      </span>
+      <span class="logo-icon hidden">
+        <%= image_tag "logo/logo-icon.svg", alt: "Logo" %>
+      </span>
+    <% end %>
+  </div>
+  <!-- SIDEBAR HEADER -->
+
+  <div class="flex flex-col overflow-y-auto duration-300 ease-linear no-scrollbar">
+    <!-- Sidebar Menu -->
+    <nav>
+      <!-- Menu Group -->
+      <div>
+        <h3 class="mb-4 text-xs uppercase leading-[20px] text-gray-400">
+          <span class="menu-group-icon hidden">...</span>
+          <span
+            class="menu-group-title">
+            MENU
+          </span>
+        </h3>
+
+        <ul class="flex flex-col gap-4 mb-6">
+          <!-- Menu Item Postagens -->
+          <%= render "shared/dashboard/menu_itens/post" %>
+          <!-- Menu Item Postagens -->
+
+        </ul>
+      </div>
+
+    </nav>
+    <!-- Sidebar Menu -->
+
+  </div>
+</aside>

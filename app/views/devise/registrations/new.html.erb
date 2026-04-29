@@ -1,0 +1,54 @@
+<div class="relative p-6 bg-white z-1 dark:bg-gray-900 sm:p-0">
+  <div class="flex flex-col justify-center w-full min-h-screen dark:bg-gray-900 sm:p-0 lg:flex-row">
+    <div class="flex flex-col flex-1 w-full">
+      <div class="flex flex-col justify-center flex-1 w-full max-w-md mx-auto py-8">
+        <div class="mb-5 sm:mb-8">
+          <h1 class="mb-2 font-semibold text-gray-800 text-title-sm dark:text-white/90 sm:text-title-md">Criar conta</h1>
+          <p class="text-sm text-gray-500 dark:text-gray-400">Preencha os dados para se cadastrar.</p>
+        </div>
+
+        <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+          <%= render "devise/shared/error_messages", resource: resource %>
+
+          <div class="space-y-5">
+            <div>
+              <%= f.label :email, "E-mail", class: "mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400" %>
+              <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "Digite seu e-mail", class: "h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 shadow-theme-xs placeholder:text-gray-400 focus:border-brand-300 focus:outline-hidden focus:ring-3 focus:ring-brand-500/10 dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800" %>
+            </div>
+
+            <div>
+              <%= f.label :password, "Senha", class: "mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400" %>
+              <% if @minimum_password_length %>
+                <p class="mb-1 text-xs text-gray-500 dark:text-gray-400"><%= @minimum_password_length %> caracteres no mínimo</p>
+              <% end %>
+              <%= f.password_field :password, autocomplete: "new-password", placeholder: "Digite sua senha", class: "h-11 w-full rounded-lg border border-gray-300 bg-transparent py-2.5 px-4 text-sm text-gray-800 shadow-theme-xs placeholder:text-gray-400 focus:border-brand-300 focus:outline-hidden focus:ring-3 focus:ring-brand-500/10 dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800" %>
+            </div>
+
+            <div>
+              <%= f.label :password_confirmation, "Confirmar senha", class: "mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400" %>
+              <%= f.password_field :password_confirmation, autocomplete: "new-password", placeholder: "Confirme sua senha", class: "h-11 w-full rounded-lg border border-gray-300 bg-transparent py-2.5 px-4 text-sm text-gray-800 shadow-theme-xs placeholder:text-gray-400 focus:border-brand-300 focus:outline-hidden focus:ring-3 focus:ring-brand-500/10 dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800" %>
+            </div>
+
+            <div>
+              <%= f.submit "Cadastrar", class: "flex items-center justify-center w-full px-4 py-3 text-sm font-medium text-white transition rounded-lg bg-brand-500 shadow-theme-xs hover:bg-brand-600" %>
+            </div>
+          </div>
+        <% end %>
+
+        <div class="mt-5">
+          <p class="text-sm font-normal text-center text-gray-700 dark:text-gray-400 sm:text-start">
+            Já possui conta?
+            <%= link_to "Entrar", new_session_path(resource_name), class: "text-brand-500 hover:text-brand-600 dark:text-brand-400" %>
+          </p>
+          <%= render "devise/shared/links" %>
+        </div>
+
+        <div class="mt-8">
+          <%= link_to root_path, class: "inline-flex items-center text-sm text-gray-500 transition-colors hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300" do %>
+            Voltar para home
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,46 @@
+services:
+  db:
+    image: postgres:17.5-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - postgres_data:/backups
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5432:5432"
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      - .:/base_app
+    volumes_from:
+      - box
+    ports:
+      - "3000:3000"
+    environment:
+      - DATABASE_URL=postgres://postgres:password@db:5432/base_app_development
+      - RAILS_ENV=development
+      - BINDING=0.0.0.0
+    depends_on:
+      - db
+    stdin_open: true
+    tty: true
+    command: bash -c "rm -f tmp/pids/server.pid && bundle install && bin/dev"
+
+  box:
+    image: busybox
+    volumes:
+      - /box
+
+  mailcatcher:
+    image: yappabe/mailcatcher
+    ports:
+      - 1025:1025
+      - 1080:1080
+
+volumes:
+  postgres_data:
+  box:
