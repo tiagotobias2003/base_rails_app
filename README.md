@@ -10,7 +10,7 @@ Considerando que você já tenha o docker instalado e rodando na sua máquina, e
 ```bash
 docker compose build --no-cache
 docker compose run --rm web bundle
-docker compose run --rm web bundle exec rails db:create
+docker compose run --rm web bin/rails db:create db:migrate db:seed
 docker compose up
 ```
 
