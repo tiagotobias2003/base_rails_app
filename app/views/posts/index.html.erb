@@ -25,4 +25,38 @@
       <p class="text-sm text-slate-600 dark:text-slate-400">Nenhum post encontrado.</p>
     </div>
   <% end %>
+
+
+<div class="border-t border-gray-100 p-5 sm:p-6 dark:border-gray-800">
+  <!-- ====== Table Six Start -->
+  <div class="overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03]">
+  <div class="max-w-full overflow-x-auto custom-scrollbar">
+    <table class="w-full min-w-[1102px]">
+      <thead>
+        <tr class="border-b border-gray-100 dark:border-gray-800">
+          <th class="px-5 py-3 text-left sm:px-6">
+            <p class="font-medium text-gray-500 text-theme-xs dark:text-gray-400">
+              Usuários
+            </p>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <%User.all.each do |user| %>
+          <tr class="border-b border-gray-100 dark:border-gray-800">
+            <td class="px-5 py-4 sm:px-6" colspan="1">
+              <div class="flex items-center gap-3">
+                <%= user.email %>
+              </div>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+<!-- ====== Table Six End -->
+                </div>
+
+
 </section>
