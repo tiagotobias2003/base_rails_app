@@ -1,0 +1,38 @@
+pt-BR:
+  activerecord:
+    models:
+      profile: Perfil
+    attributes:
+      profile:
+        full_name: Nome completo
+        cpf: CPF
+        rg: RG
+        rg_issuer: Órgão expedidor
+        birth_date: Data de nascimento
+        gender: Gênero
+        phone: Telefone fixo
+        mobile_phone: Celular
+        mother_name: Nome da mãe
+        nationality: Nacionalidade
+        marital_status: Estado civil
+        cep: CEP
+        street: Logradouro
+        number: Número
+        complement: Complemento
+        neighborhood: Bairro
+        city: Cidade
+        state: Estado
+        avatar: Foto de perfil
+    enums:
+      profile:
+        gender:
+          male: Masculino
+          female: Feminino
+          other: Outro
+          prefer_not_to_say: Prefiro não informar
+        marital_status:
+          single: Solteiro(a)
+          married: Casado(a)
+          divorced: Divorciado(a)
+          widowed: Viúvo(a)
+          domestic_partnership: União estável

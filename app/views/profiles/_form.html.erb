@@ -1,0 +1,138 @@
+<%= form_with(model: profile, url: profile_path, class: "space-y-6", html: { multipart: true }) do |form| %>
+  <% if profile.errors.any? %>
+    <div class="rounded-lg border border-rose-200 bg-rose-50 p-4 dark:border-rose-800 dark:bg-rose-950/40">
+      <h2 class="text-sm font-semibold text-rose-700 dark:text-rose-300">
+        <%= pluralize(profile.errors.count, "erro") %> impediram o perfil de ser salvo:
+      </h2>
+      <ul class="mt-2 list-disc space-y-1 pl-5 text-sm text-rose-700 dark:text-rose-300">
+        <% profile.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <section class="rounded-xl border border-gray-200 p-5 dark:border-gray-800">
+    <h2 class="mb-4 text-sm font-semibold text-gray-800 dark:text-white/90">Foto de perfil</h2>
+    <div class="flex items-center gap-4">
+      <div class="h-20 w-20 overflow-hidden rounded-full border border-gray-200 dark:border-gray-700">
+        <%= user_avatar(current_user, alt: "Avatar", class: "h-20 w-20 object-cover") %>
+      </div>
+      <div class="flex-1">
+        <%= form.label :avatar, "Selecionar imagem", class: "mb-2 block text-sm font-medium text-slate-700 dark:text-slate-300" %>
+        <%= form.file_field :avatar, accept: "image/png,image/jpeg,image/gif,image/webp", class: "block w-full text-sm text-gray-600 file:mr-4 file:rounded-lg file:border-0 file:bg-brand-500 file:px-4 file:py-2 file:text-sm file:font-medium file:text-white hover:file:bg-brand-600 dark:text-gray-300" %>
+        <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">PNG, JPEG, GIF ou WebP. Máximo de 5 MB.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="rounded-xl border border-gray-200 p-5 dark:border-gray-800">
+    <h2 class="mb-4 text-sm font-semibold text-gray-800 dark:text-white/90">Dados pessoais</h2>
+    <div class="grid gap-6 md:grid-cols-2">
+      <div class="md:col-span-2">
+        <%= form.label :full_name, class: "mb-2 block text-sm font-medium text-slate-700 dark:text-slate-300" %>
+        <%= form.text_field :full_name, class: field_classes %>
+      </div>
+
+      <div>
+        <%= form.label :cpf, class: "mb-2 block text-sm font-medium text-slate-700 dark:text-slate-300" %>
+        <%= form.text_field :cpf, placeholder: "000.000.000-00", class: field_classes %>
+      </div>
+
+      <div>
+        <%= form.label :birth_date, class: "mb-2 block text-sm font-medium text-slate-700 dark:text-slate-300" %>
+        <%= form.date_field :birth_date, class: field_classes %>
+      </div>
+
+      <div>
+        <%= form.label :rg, class: "mb-2 block text-sm font-medium text-slate-700 dark:text-slate-300" %>
+        <%= form.text_field :rg, class: field_classes %>
+      </div>
+
+      <div>
+        <%= form.label :rg_issuer, class: "mb-2 block text-sm font-medium text-slate-700 dark:text-slate-300" %>
+        <%= form.text_field :rg_issuer, placeholder: "SSP/SP", class: field_classes %>
+      </div>
+
+      <div>
+        <%= form.label :gender, class: "mb-2 block text-sm font-medium text-slate-700 dark:text-slate-300" %>
+        <%= form.select :gender, profile_enum_options(Profile, :gender), { prompt: "Selecione" }, class: field_classes %>
+      </div>
+
+      <div>
+        <%= form.label :marital_status, class: "mb-2 block text-sm font-medium text-slate-700 dark:text-slate-300" %>
+        <%= form.select :marital_status, profile_enum_options(Profile, :marital_status), { prompt: "Selecione" }, class: field_classes %>
+      </div>
+
+      <div>
+        <%= form.label :mother_name, class: "mb-2 block text-sm font-medium text-slate-700 dark:text-slate-300" %>
+        <%= form.text_field :mother_name, class: field_classes %>
+      </div>
+
+      <div>
+        <%= form.label :nationality, class: "mb-2 block text-sm font-medium text-slate-700 dark:text-slate-300" %>
+        <%= form.text_field :nationality, class: field_classes %>
+      </div>
+    </div>
+  </section>
+
+  <section class="rounded-xl border border-gray-200 p-5 dark:border-gray-800">
+    <h2 class="mb-4 text-sm font-semibold text-gray-800 dark:text-white/90">Contato</h2>
+    <div class="grid gap-6 md:grid-cols-2">
+      <div>
+        <%= form.label :mobile_phone, class: "mb-2 block text-sm font-medium text-slate-700 dark:text-slate-300" %>
+        <%= form.telephone_field :mobile_phone, placeholder: "(11) 99999-9999", class: field_classes %>
+      </div>
+
+      <div>
+        <%= form.label :phone, class: "mb-2 block text-sm font-medium text-slate-700 dark:text-slate-300" %>
+        <%= form.telephone_field :phone, placeholder: "(11) 3333-3333", class: field_classes %>
+      </div>
+    </div>
+  </section>
+
+  <section class="rounded-xl border border-gray-200 p-5 dark:border-gray-800">
+    <h2 class="mb-4 text-sm font-semibold text-gray-800 dark:text-white/90">Endereço</h2>
+    <div class="grid gap-6 md:grid-cols-2">
+      <div>
+        <%= form.label :cep, class: "mb-2 block text-sm font-medium text-slate-700 dark:text-slate-300" %>
+        <%= form.text_field :cep, placeholder: "00000-000", class: field_classes %>
+      </div>
+
+      <div class="md:col-span-2">
+        <%= form.label :street, class: "mb-2 block text-sm font-medium text-slate-700 dark:text-slate-300" %>
+        <%= form.text_field :street, class: field_classes %>
+      </div>
+
+      <div>
+        <%= form.label :number, class: "mb-2 block text-sm font-medium text-slate-700 dark:text-slate-300" %>
+        <%= form.text_field :number, class: field_classes %>
+      </div>
+
+      <div>
+        <%= form.label :complement, class: "mb-2 block text-sm font-medium text-slate-700 dark:text-slate-300" %>
+        <%= form.text_field :complement, class: field_classes %>
+      </div>
+
+      <div>
+        <%= form.label :neighborhood, class: "mb-2 block text-sm font-medium text-slate-700 dark:text-slate-300" %>
+        <%= form.text_field :neighborhood, class: field_classes %>
+      </div>
+
+      <div>
+        <%= form.label :city, class: "mb-2 block text-sm font-medium text-slate-700 dark:text-slate-300" %>
+        <%= form.text_field :city, class: field_classes %>
+      </div>
+
+      <div>
+        <%= form.label :state, class: "mb-2 block text-sm font-medium text-slate-700 dark:text-slate-300" %>
+        <%= form.select :state, Profile::BRAZILIAN_STATES, { prompt: "UF" }, class: field_classes %>
+      </div>
+    </div>
+  </section>
+
+  <div class="flex items-center gap-3">
+    <%= form.submit "Salvar perfil", class: "inline-flex items-center justify-center rounded-lg bg-brand-500 px-4 py-2 text-sm font-semibold text-white transition hover:bg-brand-600" %>
+    <%= link_to "Cancelar", profile_path, class: "inline-flex items-center justify-center rounded-lg border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-100 dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-800" %>
+  </div>
+<% end %>

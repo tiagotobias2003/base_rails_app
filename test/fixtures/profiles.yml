@@ -1,0 +1,41 @@
+one:
+  user: one
+  full_name: João da Silva
+  cpf: "52998224725"
+  rg: "123456789"
+  rg_issuer: SSP/SP
+  birth_date: 1990-05-20
+  gender: 0
+  phone: "1133334444"
+  mobile_phone: "11999998888"
+  mother_name: Maria da Silva
+  nationality: Brasileira
+  marital_status: 0
+  cep: "01310100"
+  street: Avenida Paulista
+  number: "1000"
+  complement: Apto 12
+  neighborhood: Bela Vista
+  city: São Paulo
+  state: SP
+
+two:
+  user: two
+  full_name: Ana Souza
+  cpf: "39053344705"
+  rg: "987654321"
+  rg_issuer: SSP/RJ
+  birth_date: 1988-11-03
+  gender: 1
+  phone: "2133334444"
+  mobile_phone: "21999998888"
+  mother_name: Rosa Souza
+  nationality: Brasileira
+  marital_status: 1
+  cep: "20040020"
+  street: Rua da Assembleia
+  number: "50"
+  complement:
+  neighborhood: Centro
+  city: Rio de Janeiro
+  state: RJ

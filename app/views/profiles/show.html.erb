@@ -1,0 +1,55 @@
+<div class="mx-auto w-full max-w-4xl py-10">
+  <div class="rounded-2xl border border-gray-200 bg-white p-6 shadow-theme-xs dark:border-gray-800 dark:bg-gray-900">
+    <div class="mb-6 flex items-center justify-between gap-4">
+      <div>
+        <h1 class="mb-2 font-semibold text-gray-800 text-title-sm dark:text-white/90 sm:text-title-md">Meu perfil</h1>
+        <p class="text-sm text-gray-500 dark:text-gray-400">Visualize e gerencie seus dados pessoais.</p>
+      </div>
+      <%= link_to "Editar perfil", edit_profile_path, class: "inline-flex items-center justify-center rounded-lg bg-brand-500 px-4 py-2 text-sm font-semibold text-white transition hover:bg-brand-600" %>
+    </div>
+
+  <% if @profile.persisted? %>
+    <div class="mb-8 flex items-center gap-4">
+      <div class="h-24 w-24 overflow-hidden rounded-full border border-gray-200 dark:border-gray-700">
+        <%= user_avatar(current_user, alt: "Avatar", class: "h-24 w-24 object-cover") %>
+      </div>
+      <div>
+        <p class="text-lg font-semibold text-gray-800 dark:text-white/90"><%= @profile.full_name %></p>
+        <p class="text-sm text-gray-500 dark:text-gray-400"><%= current_user.email %></p>
+      </div>
+    </div>
+
+    <div class="grid gap-6 md:grid-cols-2">
+      <div class="rounded-xl border border-gray-200 p-5 dark:border-gray-800">
+        <h2 class="mb-4 text-sm font-semibold text-gray-800 dark:text-white/90">Dados pessoais</h2>
+        <dl class="space-y-3 text-sm">
+          <div><dt class="text-gray-500 dark:text-gray-400">CPF</dt><dd class="font-medium text-gray-800 dark:text-white/90"><%= @profile.formatted_cpf %></dd></div>
+          <div><dt class="text-gray-500 dark:text-gray-400">RG</dt><dd class="font-medium text-gray-800 dark:text-white/90"><%= [@profile.rg, @profile.rg_issuer].compact_blank.join(" - ").presence || "—" %></dd></div>
+          <div><dt class="text-gray-500 dark:text-gray-400">Data de nascimento</dt><dd class="font-medium text-gray-800 dark:text-white/90"><%= l(@profile.birth_date) %></dd></div>
+          <div><dt class="text-gray-500 dark:text-gray-400">Gênero</dt><dd class="font-medium text-gray-800 dark:text-white/90"><%= profile_enum_label(Profile, :gender, @profile.gender) %></dd></div>
+          <div><dt class="text-gray-500 dark:text-gray-400">Estado civil</dt><dd class="font-medium text-gray-800 dark:text-white/90"><%= profile_enum_label(Profile, :marital_status, @profile.marital_status) %></dd></div>
+          <div><dt class="text-gray-500 dark:text-gray-400">Nome da mãe</dt><dd class="font-medium text-gray-800 dark:text-white/90"><%= @profile.mother_name %></dd></div>
+          <div><dt class="text-gray-500 dark:text-gray-400">Nacionalidade</dt><dd class="font-medium text-gray-800 dark:text-white/90"><%= @profile.nationality %></dd></div>
+        </dl>
+      </div>
+
+      <div class="rounded-xl border border-gray-200 p-5 dark:border-gray-800">
+        <h2 class="mb-4 text-sm font-semibold text-gray-800 dark:text-white/90">Contato e endereço</h2>
+        <dl class="space-y-3 text-sm">
+          <div><dt class="text-gray-500 dark:text-gray-400">Celular</dt><dd class="font-medium text-gray-800 dark:text-white/90"><%= @profile.mobile_phone %></dd></div>
+          <div><dt class="text-gray-500 dark:text-gray-400">Telefone fixo</dt><dd class="font-medium text-gray-800 dark:text-white/90"><%= @profile.phone.presence || "—" %></dd></div>
+          <div><dt class="text-gray-500 dark:text-gray-400">CEP</dt><dd class="font-medium text-gray-800 dark:text-white/90"><%= @profile.formatted_cep %></dd></div>
+          <div><dt class="text-gray-500 dark:text-gray-400">Endereço</dt><dd class="font-medium text-gray-800 dark:text-white/90"><%= [@profile.street, @profile.number, @profile.complement].compact_blank.join(", ") %></dd></div>
+          <div><dt class="text-gray-500 dark:text-gray-400">Bairro</dt><dd class="font-medium text-gray-800 dark:text-white/90"><%= @profile.neighborhood %></dd></div>
+          <div><dt class="text-gray-500 dark:text-gray-400">Cidade/UF</dt><dd class="font-medium text-gray-800 dark:text-white/90"><%= "#{@profile.city}/#{@profile.state}" %></dd></div>
+        </dl>
+      </div>
+    </div>
+  <% else %>
+    <div class="rounded-xl border border-dashed border-gray-300 p-8 text-center dark:border-gray-700">
+      <p class="mb-4 text-sm text-gray-600 dark:text-gray-400">Você ainda não preencheu seu perfil.</p>
+      <%= link_to "Completar perfil", edit_profile_path, class: "inline-flex items-center justify-center rounded-lg bg-brand-500 px-4 py-2 text-sm font-semibold text-white transition hover:bg-brand-600" %>
+    </div>
+  <% end %>
+  </div>
+</div>
