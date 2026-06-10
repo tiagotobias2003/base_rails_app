@@ -14,16 +14,35 @@ docker compose run --rm web bin/rails db:create db:migrate db:seed
 docker compose up
 ```
 
+## Funcionalidades
+
+- **Autenticação** com Devise (login, registro, confirmação de e-mail, recuperação de senha)
+- **Perfil do usuário** com dados pessoais brasileiros, endereço e avatar via Active Storage
+- **Postagens** com CRUD completo no dashboard
+- **Controle de acesso por roles** com [Rolify](https://github.com/RolifyCommunity/rolify)
+  - Novos cadastros recebem automaticamente a role `user`
+  - Usuários iniciais do seed são promovidos a `admin`
+- **Gerenciamento de usuários** (apenas admins)
+  - Listagem de todos os usuários
+  - Promover usuários comuns a administrador
+  - Remover a role de administrador (com proteção para o último admin e para auto-remoção)
+
 ## Como fazer login (dados do seed)
 
 Após rodar `rails db:seed`, use uma das credenciais abaixo na tela de login do Devise:
 
-- **Email:** `user@example.com` | **Senha:** `123456`
-- **Email:** `user2@example.com` | **Senha:** `123456`
+| E-mail | Senha | Role |
+|--------|-------|------|
+| `user@example.com` | `123456` | admin |
+| `admin@example.com` | `123456` | admin |
+
+O seed também cria 10 usuários comuns gerados pelo Faker (senha padrão: `12345678`).
 
 ## Acesso rápido
 
-- Dashboard: após login, acesse a área principal em `posts_path` (rota "Ir para Dashboard").
+- **Dashboard:** após login, acesse a área principal em `/posts`
+- **Perfil:** `/profile`
+- **Usuários (admin):** `/admin/users` — visível no menu lateral apenas para administradores
 
 ## Stack atual do projeto
 
@@ -32,10 +51,11 @@ Após rodar `rails db:seed`, use uma das credenciais abaixo na tela de login do 
 - **Servidor web:** Puma
 - **Assets:** Propshaft
 - **Frontend Rails:** Importmap + Turbo + Stimulus
-- **UI:** Tailwind CSS
+- **UI:** Tailwind CSS (template TailAdmin)
 - **Autenticação:** Devise
+- **Roles:** Rolify
 - **Infra nativa Rails:** Solid Cache, Solid Queue e Solid Cable
-- **Utilitários:** Jbuilder, Image Processing, Kamal, Thruster e Bootsnap
+- **Utilitários:** Jbuilder, Image Processing, Faker, Kamal, Thruster e Bootsnap
 
 ## Layouts disponíveis
 
