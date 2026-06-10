@@ -7,8 +7,11 @@ DEFAULT_PASSWORD = "12345678"
 
 INITIAL_USERS = [
   { email: "user@example.com", password: "123456", full_name: "Usuário Demo" },
-  { email: "user2@example.com", password: "123456", full_name: "Usuário Demo 2" }
+  { email: "admin@example.com", password: "123456", full_name: "Usuário Demo 2" }
 ].freeze
+
+ADMIN_ROLE = :admin
+USER_ROLE = :user
 
 def unique_cpf(used_cpfs)
   loop do
@@ -76,6 +79,7 @@ Post.destroy_all
 Profile.find_each { |profile| profile.avatar.purge if profile.avatar.attached? }
 Profile.destroy_all
 User.destroy_all
+Role.destroy_all
 
 puts "Criando usuários de acesso inicial..."
 
@@ -87,8 +91,9 @@ INITIAL_USERS.each do |initial_user|
     used_cpfs: used_cpfs,
     avatar_index: avatar_index
   )
+  user.promote_to_admin!
   avatar_index += 1
-  puts "Usuário criado: #{user.email} (#{user.profile.full_name})"
+  puts "Usuário criado: #{user.email} (#{user.profile.full_name}) [admin]"
 end
 
 puts "Criando #{USERS_COUNT} usuários com perfil completo (Faker)..."
@@ -101,7 +106,7 @@ USERS_COUNT.times do
     avatar_index: avatar_index
   )
   avatar_index += 1
-  puts "Usuário criado: #{user.email} (#{user.profile.full_name})"
+  puts "Usuário criado: #{user.email} (#{user.profile.full_name}) [user]"
 end
 
 puts ""
@@ -110,6 +115,8 @@ puts "  Usuários: #{User.count}"
 puts "  Perfis: #{Profile.count}"
 puts "  Avatares: #{ActiveStorage::Attachment.where(record_type: 'Profile', name: 'avatar').count}"
 puts "  Posts: #{Post.count}"
+puts "  Admins: #{User.with_role(ADMIN_ROLE).count}"
+puts "  Usuários comuns: #{User.with_role(USER_ROLE).count}"
 puts ""
 puts "Como fazer login (dados do seed)"
 puts "Após rodar rails db:seed, use uma das credenciais abaixo na tela de login do Devise:"

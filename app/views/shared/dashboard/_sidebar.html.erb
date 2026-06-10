@@ -35,6 +35,9 @@
           <%= render "shared/dashboard/menu_itens/post" %>
           <!-- Menu Item Postagens -->
 
+          <% if current_user&.admin? %>
+            <%= render "shared/dashboard/menu_itens/users" %>
+          <% end %>
         </ul>
       </div>
 
