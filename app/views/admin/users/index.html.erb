@@ -1,0 +1,78 @@
+<section class="space-y-6">
+  <div>
+    <h1 class="text-2xl font-bold text-slate-900 dark:text-slate-100">Usuários</h1>
+    <p class="text-sm text-slate-600 dark:text-slate-400">Gerencie os usuários e suas permissões de acesso.</p>
+  </div>
+
+  <% if @users.any? %>
+    <div class="overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03]">
+      <div class="max-w-full overflow-x-auto custom-scrollbar">
+        <table class="w-full min-w-[720px]">
+          <thead>
+            <tr class="border-b border-gray-100 dark:border-gray-800">
+              <th class="px-5 py-3 text-left sm:px-6">
+                <p class="font-medium text-gray-500 text-theme-xs dark:text-gray-400">Usuário</p>
+              </th>
+              <th class="px-5 py-3 text-left sm:px-6">
+                <p class="font-medium text-gray-500 text-theme-xs dark:text-gray-400">E-mail</p>
+              </th>
+              <th class="px-5 py-3 text-left sm:px-6">
+                <p class="font-medium text-gray-500 text-theme-xs dark:text-gray-400">Role</p>
+              </th>
+              <th class="px-5 py-3 text-right sm:px-6">
+                <p class="font-medium text-gray-500 text-theme-xs dark:text-gray-400">Ações</p>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @users.each do |user| %>
+              <tr class="border-b border-gray-100 dark:border-gray-800">
+                <td class="px-5 py-4 sm:px-6">
+                  <div class="flex items-center gap-3">
+                    <div class="h-10 w-10 overflow-hidden rounded-full">
+                      <%= user_avatar(user, alt: user.display_name) %>
+                    </div>
+                    <p class="font-medium text-gray-800 text-theme-sm dark:text-white/90">
+                      <%= user.display_name %>
+                      <% if user == current_user %>
+                        <span class="text-gray-400">(você)</span>
+                      <% end %>
+                    </p>
+                  </div>
+                </td>
+                <td class="px-5 py-4 sm:px-6">
+                  <p class="text-gray-500 text-theme-sm dark:text-gray-400"><%= user.email %></p>
+                </td>
+                <td class="px-5 py-4 sm:px-6">
+                  <%= user_role_badge(user) %>
+                </td>
+                <td class="px-5 py-4 text-right sm:px-6">
+                  <div class="flex items-center justify-end gap-2">
+                    <% if user.admin? %>
+                      <%= button_to "Remover admin",
+                        demote_admin_user_path(user),
+                        method: :patch,
+                        class: "inline-flex items-center justify-center rounded-md border border-rose-300 px-3 py-1.5 text-sm font-medium text-rose-700 transition hover:bg-rose-50 disabled:cursor-not-allowed disabled:opacity-50 dark:border-rose-700 dark:text-rose-300 dark:hover:bg-rose-950/40",
+                        disabled: user == current_user || user.last_admin?,
+                        form: { data: { turbo_confirm: "Remover a role de administrador de #{user.display_name}?" } } %>
+                    <% else %>
+                      <%= button_to "Promover a admin",
+                        promote_admin_user_path(user),
+                        method: :patch,
+                        class: "inline-flex items-center justify-center rounded-md border border-violet-300 px-3 py-1.5 text-sm font-medium text-violet-700 transition hover:bg-violet-50 dark:border-violet-700 dark:text-violet-300 dark:hover:bg-violet-950/40",
+                        form: { data: { turbo_confirm: "Promover #{user.display_name} a administrador?" } } %>
+                    <% end %>
+                  </div>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  <% else %>
+    <div class="rounded-xl border border-dashed border-slate-300 bg-white p-8 text-center dark:border-slate-700 dark:bg-slate-900">
+      <p class="text-sm text-slate-600 dark:text-slate-400">Nenhum usuário encontrado.</p>
+    </div>
+  <% end %>
+</section>
