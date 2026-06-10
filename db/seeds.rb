@@ -124,3 +124,11 @@ puts ""
 INITIAL_USERS.each do |initial_user|
   puts "  Email: #{initial_user[:email]} | Senha: #{initial_user[:password]}"
 end
+puts ""
+puts "API JWT (mesmas credenciais do seed)"
+puts "  POST   /api/v1/login   — body: { user: { email, password } }"
+puts "  GET    /api/v1/me      — header: Authorization: Bearer <token>"
+puts "  DELETE /api/v1/logout  — header: Authorization: Bearer <token>"
+puts ""
+puts "Exemplo com curl:"
+puts '  curl -X POST http://localhost:3000/api/v1/login -H "Content-Type: application/json" -d \'{"user":{"email":"user@example.com","password":"123456"}}\''

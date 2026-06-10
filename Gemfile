@@ -50,6 +50,9 @@ gem 'devise'
 # Gem para gerenciamento de acessos por role
 gem 'rolify'
 
+# Gem para autenticação via JWT na API (integrada ao Devise)
+gem 'devise-jwt'
+
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem

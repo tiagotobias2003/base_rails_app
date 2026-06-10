@@ -1,9 +1,17 @@
 class User < ApplicationRecord
+  include Devise::JWT::RevocationStrategies::JTIMatcher
+
   rolify
   # Include default devise modules. Others available are:
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
-         :confirmable, :lockable, :timeoutable, :trackable
+         :confirmable, :lockable, :timeoutable, :trackable,
+         :jwt_authenticatable, jwt_revocation_strategy: self
+
+  # Payload extra incluído no token JWT
+  def jwt_payload
+    super.merge("email" => email)
+  end
 
   has_one :profile, dependent: :destroy
   has_many :posts, dependent: :destroy

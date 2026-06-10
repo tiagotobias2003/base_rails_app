@@ -20,6 +20,21 @@ Devise.setup do |config|
   # Configure the parent class to the devise controllers.
   # config.parent_controller = 'DeviseController'
 
+  # ==> Configuração do JWT (API)
+  config.jwt do |jwt|
+    jwt.secret = Rails.application.credentials.devise_jwt_secret_key || Rails.application.secret_key_base
+    # Rotas que emitem um novo token no header Authorization da resposta
+    jwt.dispatch_requests = [
+      [ "POST", %r{^/api/v1/login$} ]
+    ]
+    # Rotas que revogam o token atual
+    jwt.revocation_requests = [
+      [ "DELETE", %r{^/api/v1/logout$} ]
+    ]
+    # Tempo de expiração do token
+    jwt.expiration_time = 1.day.to_i
+  end
+
   # ==> Mailer Configuration
   # Configure the e-mail address which will be shown in Devise::Mailer,
   # note that it will be overwritten if you use your own mailer class
@@ -97,7 +112,7 @@ Devise.setup do |config|
   # Notice that if you are skipping storage for all authentication paths, you
   # may want to disable generating routes to Devise's sessions controller by
   # passing skip: :sessions to `devise_for` in your config/routes.rb
-  config.skip_session_storage = [:http_auth]
+  config.skip_session_storage = [ :http_auth, :jwt ]
 
   # By default, Devise cleans up the CSRF token on authentication to
   # avoid CSRF token fixation attacks. This means that, when using AJAX
@@ -280,10 +295,9 @@ Devise.setup do |config|
   # If you want to use other strategies, that are not supported by Devise, or
   # change the failure app, you can configure them inside the config.warden block.
   #
-  # config.warden do |warden_config|
-  #   warden_config.intercept_401 = false
-  #   warden_config.default_strategies(scope: :user).unshift :some_external_strategy
-  # end
+  config.warden do |warden_config|
+    warden_config.failure_app = CustomFailureApp
+  end
 
   # ==> Mountable engine configurations
   # When using Devise inside an engine, let's call it `MyEngine`, and this engine

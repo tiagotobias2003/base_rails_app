@@ -3,6 +3,22 @@ Rails.application.routes.draw do
   resource :profile, only: %i[ show edit update ]
   devise_for :users, controllers: { registrations: "users/registrations" }
 
+  namespace :api do
+    namespace :v1, defaults: { format: :json } do
+      devise_scope :user do
+        post "login", to: "sessions#create"
+        delete "logout", to: "sessions#destroy"
+      end
+      get "me", to: "users#me"
+      resources :posts
+      resources :users, only: %i[ index ] do
+        member do
+          patch :role, action: :update_role
+        end
+      end
+    end
+  end
+
   namespace :admin do
     resources :users, only: %i[ index ] do
       member do
